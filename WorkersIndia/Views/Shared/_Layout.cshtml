@@ -1,0 +1,387 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @*<meta name="author" content="Colorlib">
+        <meta name="description" content="#">
+        <meta name="keywords" content="#">*@
+    <meta name="google-signin-client_id" content="260215928282-uidcsb9b6cbsr1avg7qgqooifqrm7gmk.apps.googleusercontent.com">
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <!-- Google api -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script>
+        window.fbAsyncInit = function () {
+            // FB JavaScript SDK configuration and setup
+            FB.init({
+                appId: '429950657466238', // FB App ID
+                cookie: true,  // enable cookies to allow the server to access the session
+                xfbml: true,  // parse social plugins on this page
+                version: 'v3.0' // use graph api version 2.8
+            });
+
+            // Check whether the user already logged in
+            FB.getLoginStatus(function (response) {
+                if (response.status === 'connected') {
+                    //display user data
+                    getFbUserData();
+                    
+
+                }
+            });
+        };
+        // Load the JavaScript SDK asynchronously
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        // Facebook login with JavaScript SDK
+        function fbLogin() {
+            
+            FB.login(function (response) {
+                if (response.authResponse) {
+                    // Get and display the user profile data
+                    getFbUserData(response);
+                    //alert('fbLogin');
+                    console.log(response.id)
+                    console.log(response.picture.data.url);
+                    console.log(response.first_name);
+                    console.log(response.last_name);
+             
+                } else {
+                    document.getElementById('status').innerHTML = 'User cancelled login or did not fully authorize.';
+                }
+            }, { scope: 'email' });
+        }
+
+        // Fetch the user profile data from facebook
+        function getFbUserData() {
+            FB.api('/me', { locale: 'en_US', fields: 'id,first_name,last_name,email,link,gender,locale,picture' },
+            function (response) {
+
+                //alert('getFbUserData');
+                console.log(response.id)
+                console.log(response.picture.data.url);
+                console.log(response.first_name);
+                console.log(response.last_name);
+                //console.log(response.id);
+                //console.log(response.picture.data.url);
+                //document.getElementById('fbLink').setAttribute("onclick","fbLogout()");
+                //document.getElementById('fbLink').innerHTML = 'Logout from Facebook';
+                //document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.first_name + '!';
+                //document.getElementById('userData').innerHTML = '<p><b>FB ID:</b> '+response.id+'</p><p><b>Name:</b> '+response.first_name+' '+response.last_name+'</p><p><b>Email:</b> '+response.email+'</p><p><b>Gender:</b> '+response.gender+'</p><p><b>Locale:</b> '+response.locale+'</p><p><b>Picture:</b> <img src="'+response.picture.data.url+'"/></p><p><b>FB Profile:</b> <a target="_blank" href="'+response.link+'">click to view profile</a></p>';
+            });
+        }
+        // Logout from facebook
+        function fbLogout() {
+            FB.logout(function () {
+                //document.getElementById('fbLink').setAttribute("onclick","fbLogin()");
+                //document.getElementById('fbLink').innerHTML = '<img src="fblogin.png"/>';
+                //document.getElementById('userData').innerHTML = '';
+                //document.getElementById('status').innerHTML = 'You have successfully logout from Facebook.';
+            });
+        }
+    </script>
+
+<style>
+        .fb {
+            height: 36px;
+            color: white;
+            background-color: #4267b2;
+            font-size: 14px;
+            padding-left: 16px;
+        }
+    </style>
+
+</head>
+<body>
+    <!--// MENU -->
+    <div class="dark-bg sticky-top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="navbar-brand" href="/Home/Index/">NearWorkers</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="icon-menu"></span>
+                        </button>
+                        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Explore
+                                        <span class="icon-arrow-down"></span>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Listing
+                                        <span class="icon-arrow-down"></span>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Pages
+                                        <span class="icon-arrow-down"></span>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="#">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Blog</a>
+                                </li>
+                                <li onclick="Refresh();"><a href="#" class="btn btn-outline-light top-btn" data-toggle="modal" data-target="#myModal"><span class="ti-plus"></span>New Worker</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// END MENU -->
+    @RenderBody()
+    <!--============================= FOOTER =============================-->
+    <footer class="main-block dark-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="copyright">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        <p>Copyright &copy; 2018 WorkersNear. All rights reserved.</p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        <ul>
+                            <li><a href="#"><span class="ti-facebook"></span></a></li>
+                            <li><a href="#"><span class="ti-twitter-alt"></span></a></li>
+                            <li><a href="#"><span class="ti-instagram"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--//END FOOTER -->
+    <!--Login Model-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLongTitle" style="color:#ff3a6d; ">Login</h3>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="button" class="btn  fb" data-use-continue-as="true" onclick="fbLogin()"><i class="fa fa-facebook pr-1"></i>Facebook</button>
+                        </div>
+                        <div class="col-md-4 ml-auto">
+                            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <hr>
+                    </div>
+                    <br>
+                    <div>
+                        <h2 style=" font-size: 14px;" id="infotext">Please login if you have account already!</h2>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="MobileNumber" placeholder="Mobile Number...">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="Password" placeholder="Password...">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="CPassword" placeholder="Please retype the password ...">
+                    </div>
+                    <div class="form-group">
+                        <h2 style=" font-size: 14px;color:red;text-align:center;" id="errortext"></h2>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p style="color:#ff3a6d;text-align:left; margin-right: 11.25rem;cursor: pointer; " id="Register" onclick="RegisterNew();">Register as a new user</p>
+                    <button type="button" class="btn btn-form" id="loginsubmit" style=" cursor:pointer">Login</button>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <!--End of Login Model-->
+</body>
+</html>
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#MobileNumber").val("");
+        $("#Password").val("");
+        $("#errortext").text("");
+        $("#CPassword").hide();
+    });
+
+    function Refresh() {
+        $("#MobileNumber").val("");
+        $("#Password").val("");
+        $("#CPassword").val("");
+        $("#errortext").text("");
+        $("#CPassword").hide();
+        $("#infotext").text("Please login if you have account already!");
+        $("#loginsubmit").text("Login");
+        $("#Register").text("Register as a new user");
+    }
+    function RegisterNew() {
+        $("#MobileNumber").val("");
+        $("#Password").val("");
+        $("#CPassword").val("");
+        $("#errortext").text("");
+        $("#CPassword").show();
+        $("#Register").text("");
+        $("#infotext").text("Please register the credentials...");
+        $("#loginsubmit").text("Register");
+
+    }
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        //location.href = 'http://localhost:60130/home';
+    }
+    function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('User signed out.');
+        });
+    }
+
+    $('#loginsubmit').click(function () {
+        $("#errortext").text("");
+        var Mobile = $('#MobileNumber').val();
+        var pwd = $('#Password').val();
+        var cpwd = $('#CPassword').val();
+        var submitmode = $("#loginsubmit").text().toString();
+        if (submitmode != "" && submitmode != null && submitmode == "Login") {
+            $("#errortext").text("");
+
+            if ((Mobile == "" || Mobile == null) || (pwd == "" || pwd == null))
+            {
+                $("#errortext").text("PLEASE FILL ALL DETAILS! ");
+            }
+            else
+            {
+                var token = btoa(Mobile + ':' + pwd);
+
+
+                $.ajax({
+                    //'/api/Login?UserName=' + Mobile+'&Password='+pwd,                   
+                    url: '@Url.Action("Login", "User")',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        var test = data.toString();
+                        alert(test);
+                        if (test == "success") {
+                            
+                            location.href = '/User/NewWorkers';
+
+                        }
+                        else {
+                            $("#errortext").text("UserName or passoword is Wrong!");
+                        }
+
+                    },
+                    fail: function (jqXHR, textStatus) {
+                        $("#errortext").text("UserName or passoword is Wrong!");
+                    }
+                })
+
+
+
+                @*$.ajax({
+                  //  type: 'POST',
+                    url: '@Url.Action("Login", "User")',
+                    data: { 'PhoneNumber': Mobile, 'Password': pwd },
+                    dataType: 'json',
+                   // cache: false,
+                    success: function (data) {
+                        location.href = 'http://localhost:60130/User/NewWorkers';
+                        //var text = data.toString();
+
+                    },
+                    error: function () {
+
+                        location.href = 'http://localhost:60130/Home/CustomError';
+                    }
+                });*@
+            }
+
+        }
+        else if (submitmode != "" && submitmode != null && submitmode == "Register") {
+            $("#errortext").text("");
+
+            if ((Mobile == "" || Mobile == null) || (pwd == "" || pwd == null) || (cpwd == "" || cpwd == null)) {
+
+                $("#errortext").text("PLEASE FILL ALL DETAILS! ");
+            }
+            else if ((Mobile != "" && Mobile != null) && (pwd != "" && pwd != null) && (cpwd != "" && cpwd != null)) {
+                if (pwd === cpwd) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("LoginRegister", "User")',
+                        data: { 'PhoneNumber': Mobile, 'Password': pwd },
+                        dataType: 'json',
+                        cache: false,
+                        success: function (data) {
+                            var text = data.toString();
+                        },
+                        error: function () {
+                            location.href = 'http://localhost:60130/Home/CustomError';
+                        }
+                    });
+                }
+                else { $("#errortext").text("PASSWORD AND CONFIRM PASSWORD NOT MATCHED! "); }
+            }
+
+        }
+
+    });
+
+
+</script>
+
