@@ -32,6 +32,9 @@ namespace WorkersIndia.Controllers
         /// <returns></returns>
         public ActionResult CustomError()
         {
+
+
+
             return View("Error");
         }
 
