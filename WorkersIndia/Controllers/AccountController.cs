@@ -483,3 +483,88 @@ namespace WorkersIndia.Controllers
         #endregion
     }
 }
+
+-------------------------------------
+
+
+    var model = @Html.Raw(Json.Encode(Model.MapPositions));
+
+    var center = @Html.Raw(Json.Encode(Model.MapPositionCenter));
+
+    var centerlattitude = parseFloat(center.Lattitude);
+
+    var centerlongitude = parseFloat(center.Longitude);
+
+ 
+
+function addInfoBubble(map) {
+
+        var group = new H.map.Group();
+
+ 
+
+        map.addObject(group);
+
+ 
+
+        // add 'tap' event listener, that opens info bubble, to the group
+
+        group.addEventListener('tap', function (evt) {
+
+            // event target is the marker itself, group is a parent event target
+
+            // for all objects that it contains
+
+            var bubble =  new H.ui.InfoBubble(evt.target.getPosition(), {
+
+                // read custom data
+
+                content: evt.target.getData()
+
+            });
+
+            // show info bubble
+
+            ui.addBubble(bubble);
+
+        }, false);
+
+ 
+
+ 
+
+       
+
+       
+
+ 
+
+        for(var i=0;i<model.length;i++)
+
+        {
+
+            var lattitude = parseFloat(model[i].Lattitude);
+
+            var longitude = parseFloat(model[i].Longitude);
+
+            coords = { lat:lattitude, lng: longitude};
+
+ 
+
+            addMarkerToGroup(group, {lat:lattitude, lng:longitude},
+
+         '<div>Manchester City' +
+
+          '</div><div >City of Manchester Stadium<br>Capacity: 48,000</div>');
+
+ 
+
+         
+
+        }
+
+ 
+
+ 
+
+addInfoBubble(map);
